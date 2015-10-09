@@ -10,22 +10,46 @@ var plot = d3.select('.canvas')
 	.attr('height',height+margin.t+margin.b)
 	.append('g')
 	.attr('class','plot')
-	//.attr('transform','translate()') --> complete this line here
+	.attr('transform','translate(20,20)');
 
 
 //Start with 100 symbols
 var numOfSymbols = 100;
+var symbols = [];
 
 //Create an array, generate objects to push into the array
 //Attributes of these symbols are
-// --> x position: between 0 and width
-// --> y position: betewen 0 and height
-// --> size: between 0 and 100x100
-// --> type: circle or square
-// --> color
-var symbols = [];
+function runRandomTrials() {
+	for (var i = 0; i < numOfSymbols; i++) {
+		symbols.push({
+			x: Math.random() * width,    // --> x position: between 0 and width
+			y: Math.random() * height,   // --> y position: betewen 0 and height
+			size: Math.random() * 50,    // --> size: between 0 and 100x100
+			color: 'rgb(230,89,19)',   // --> color
+			type: Math.round(Math.random())   // --> type: circle or square
+		})
+	}
 
 //With the array you've created and populated, draw circles to represent these symbols
-symbols.forEach(function(symbol){
-	
-})
+	symbols.forEach(function (symbol) {
+		if (symbol.type == 0) {
+			plot
+				.append('circle')
+				.attr('cx', symbol.x)
+				.attr('cy', symbol.y)
+				.attr('r', symbol.size)
+				.style('fill', symbol.color);
+		}
+
+		else {
+			plot
+				.append('rect')
+				.attr('x', symbol.x)
+				.attr('y', symbol.y)
+				.attr('width', symbol.size)
+				.attr('height', symbol.size)
+				.style('fill', symbol.color);
+		}
+	})
+}
+runRandomTrials();
